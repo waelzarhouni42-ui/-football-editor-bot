@@ -1,5 +1,6 @@
 [phases.setup]
-nixPkgs = ["python313", "ffmpeg"]
-
-[start]
-cmd = "python bot.py"
+aptPkgs = [
+    "ffmpeg",
+    "libfreetype6-dev",
+    "fonts-dejavu-core"
+]
