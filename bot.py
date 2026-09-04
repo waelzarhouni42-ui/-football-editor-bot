@@ -257,9 +257,8 @@ async def choose_length(update: Update, context: ContextTypes.DEFAULT_TYPE):
     pending.pop(chat_id, None)
 
 except Exception as e:
+except Exception as e:
     await q.message.reply_text(f"❌ Fehler: {type(e).__name__}: {e}")
-        await q.message.reply_text(f"❌ Fehler: {type(e).__name__}: {e}")
-
 def main()
     app = (
         Application.builder()
