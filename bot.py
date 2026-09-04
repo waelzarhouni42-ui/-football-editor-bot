@@ -249,12 +249,12 @@ async def choose_length(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 ),
             )
 
-        pending.pop(chat_id, None)
+       except subprocess.CalledProcessError as e:
+    error = e.stderr.decode("utf-8", errors="ignore") if e.stderr else str(e)
+    await q.message.reply_text(
+        "❌ Echter FFmpeg-Fehler:\n\n" + error[-3000:]
+    ) pending.pop(chat_id, None)
 
-    except subprocess.CalledProcessError as e:
-        await q.message.reply_text(
-            "❌ FFmpeg-Fehler. Prüfe, ob FFmpeg inklusive drawtext-Unterstützung installiert ist."
-        )
     except Exception as e:
         await q.message.reply_text(f"❌ Fehler: {type(e).__name__}: {e}")
 
