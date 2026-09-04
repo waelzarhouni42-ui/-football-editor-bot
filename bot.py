@@ -258,9 +258,25 @@ async def choose_length(update: Update, context: ContextTypes.DEFAULT_TYPE):
     except Exception as e:
         await q.message.reply_text(f"❌ Fehler: {type(e).__name__}: {e}")
 
-def main():
-    app = Application.builder().token(BOT_TOKEN).build()
+def main()
+    app = (
+        Application.builder()
+        .token(BOT_TOKEN)
+        .read_timeout(300)
+        .write_timeout(300)
+        .connect_timeout(300)
+        .pool_timeout(300)
+        .build()
+    )
     app.add_handler(CommandHandler("start", start))
+    app.add_handler(MessageHandler(filters.VIDEO, choose_length))
+    app.add_handler(CallbackQueryHandler(choose_length_callback))
+    print("Football Editor Bot V2 läuft ...")
+    app.run_polling(drop_pending_updates=True)
+
+if __name__ == "__main__":
+    main()
+
     app.add_handler(MessageHandler(filters.VIDEO | filters.Document.VIDEO, receive_video))
     app.add_handler(CallbackQueryHandler(choose_length, pattern=r"^len_"))
     print("Football Editor Bot V2 läuft …")
